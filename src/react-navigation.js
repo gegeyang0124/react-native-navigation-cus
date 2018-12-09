@@ -1,5 +1,7 @@
 /* eslint global-require: 0 */
 
+import CardStackStyleInterpolator from './views/CardStack/CardStackStyleInterpolator';
+
 
 module.exports = {
     // Core
@@ -102,6 +104,10 @@ module.exports = {
     },
     get withNavigationFocus() {
         return require('./views/withNavigationFocus').default;
+    },
+
+    get CardStackStyleInterpolator() {
+        return CardStackStyleInterpolator;
     },
 
     get StackPages() {

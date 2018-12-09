@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import NavigationActions from './NavigationActions';
 import invariant from './utils/invariant';
 import StackPages from './routers/StackPages';
-import * as TD from 'react-native-talkingdata';
 
 var evt = null;
 var isExe = true;
@@ -101,8 +100,6 @@ export default function(navigation) {
                     if(StackPages.stackPagesHistory.length > 0){
                         page = StackPages.stackPagesHistory[StackPages.stackPagesHistory.length - 1];
 
-                        TD.trackPageEnd(page.routeName);
-
                         let clsPre = StackPages.stackPages[page.routeName].screen.prototype;;
                         if(clsPre.context){
                             // clsPre.context.componentWillExit&&clsPre.context.componentWillExit.bind(clsPre.context);
@@ -119,8 +116,6 @@ export default function(navigation) {
                      }
                      cls = StackPages.stackPages[navigateTo];*!/
                     if(cls.context){
-
-                        TD.trackPageBegin(navigateTo);
 
                         // cls.context.componentWillEnter&&cls.context.componentWillEnter.bind(cls.context);
                         //第二个参数是否返回，true进入，false： 返回

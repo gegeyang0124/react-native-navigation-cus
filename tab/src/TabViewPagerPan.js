@@ -15,7 +15,6 @@ import type {
   TransitionConfigurator,
 } from './TabViewTypeDefinitions';
 
-import * as TD from "react-native-talkingdata";
 import {StackPages} from "react-navigation";
 
 type GestureEvent = {

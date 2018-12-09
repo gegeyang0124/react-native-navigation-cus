@@ -30,6 +30,16 @@ this.setParams({
   headerLeftHandle:function(){},//函数方法 可在左边按钮点击返回之前执行
   headerRightHandle:function() {}//函数方法 右边按钮点击执行
 });//设置参数改变导航栏
+
+//继承BaseComponent,将有两个生命周期回调方法
+/**
+* 进入页面时回调此方法
+* @param params json,//第一个参数，页面传递参数
+* @param action object,第二个参数，页面传递动作
+* @param routeName string,第三个参数，页面名
+* **/
+componentWillEnter(params,action,routeName);//进入页面时回调此方法
+componentWillExit();//退出页面时回调此方法
 ```
 
 ### 示例
@@ -39,18 +49,23 @@ import StyleSheetAdapt from "react-native-stylesheet-adapt";
 import {
     BaseComponent,
     StackNavigator,
-    TabNavigator
+    TabNavigator,
+    CardStackStyleInterpolator
 } from "react-native-navigation-cus";
 import {
    Text,
+   View,
+   Text,
+   TouchableOpacity,
 } from 'react-native';
 
-export default class Test extends BaseComponent<Props> {
+type Props = {};
+export default class PageLogin extends BaseComponent<Props> {
 
     constructor(props) {
         super(props);
-let param = Tools.userConfig.userCutAccount
- && Tools.userConfig.userCutAccount.length > 0
+           let param = Tools.userConfig.userCutAccount
+           && Tools.userConfig.userCutAccount.length > 0
             ? {
                 headerLeft:<ImageChange icon={require("images/role.png")}
                                         onPressIn={()=>PageSearchRole.show(this)}
@@ -62,18 +77,38 @@ let param = Tools.userConfig.userCutAccount
 
         this.setParams(param);
     }
+    
+    /**
+    * 进入页面时回调此方法
+    * @param params json,//第一个参数，页面传递参数
+    * @param action object,第二个参数，页面传递动作
+    * @param routeName string,第三个参数，页面名
+    * **/
+    componentWillEnter(params,action,routeName){
+        
+    }//进入页面时回调此方法
+    componentWillExit(){
+        
+    }//退出页面时回调此方法
+    
     render() {
         return (
-            <ViewTitle>
-                <BarcodeView ref={c=>this.barcodeView}
+            <View>
+                <BarcodeView ref={c=>this.barcodeView = c}
                     style={styles.testStyle}/>
                 <Text onPress={()=>this.barcodeView.startScan()}>
                     开始扫码
                 </Text>
-            </ViewTitle>
+                <TouchableOpacity onPress={()=>this.goPage('PageMain')}>
+                     <Text>
+                          下一页
+                     </Text>
+                </TouchableOpacity>
+            </View>
         );
     }
 }
+
 const styles = StyleSheetAdapt.create({
 
     testStyle2:{
@@ -86,6 +121,57 @@ const styles = StyleSheetAdapt.create({
         ],
     },
 });
+
+const StackPages = {
+    PageLogin: {
+        screen: PageLogin,
+        navigationOptions:({navigation}) =>({
+            header:null,
+        })
+    },
+    PageMain: { screen: PageMain },
+};
+
+const App = StackNavigator(StackPages,{
+    // initialRouteName: 'PageTripDetail',
+    // headerMode:'none',
+    // backBehavior: 'none', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
+    navigationOptions:{
+        /*headerLeft:<Image source={require('./../res/images/leftWhite.png')}
+                          style={styles.iconLeft}/>,*/
+        //header: null,//无导航条
+        //headerLeft:null,
+        gesturesEnabled:false,
+        headerStyle:{
+            backgroundColor: '#FF6B01',
+            //color:"#FFFFFF",
+            height:StyleSheetAdapt.getHeight(60),
+        },
+        headerTitleStyle:{
+            flex: 1,
+            textAlign: 'center',
+            fontSize:StyleSheetAdapt.getWidth(25),
+        },
+        //headerTitle:'首页',
+        headerBackTitleStyle:{
+            //color:"#FFFFFF",
+            /*width:40,
+            height:40,*/
+        },
+        headerTintColor:'#FFFFFF',
+        headerBackTitle:null,
+        // headerTitleStyle:{
+        //     fontSize: StyleSheetAdapt.getWidth(25),
+        // },
+    },
+    mode:'none',
+    //headerMode:"float",
+    transitionConfig:()=>({
+        screenInterpolator:CardStackStyleInterpolator.forHorizontal,
+    }),
+});
+
+module.exports = App;
 
 ```
 
