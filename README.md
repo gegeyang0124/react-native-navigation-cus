@@ -4,10 +4,6 @@ react-native的导航组件，基于[react-navigation@1.5.11](https://github.com
 ### 安装组件：
 npm i --save react-native-navigation-cus
 
-<p>
-<iframe src="https://www.baidu.com/?tn=93153557_hao_pg" name="iframe_a"></iframe>
-</p>
-
 ### 使用 （此导航组件可查看[react-navigation](https://github.com/react-navigation/react-navigation)，或百度搜索react-navigation的使用与配置）
 ##### 组件BaseComponent 用于继承导航属性;这个组件中的方法都是"静态和动态"两种调用方式
 ```javascript
