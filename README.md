@@ -1,4 +1,4 @@
-# react-native-navigation-cus
+# react-native-navigation-cus (2018-12-10发布)
 react-native的导航组件，基于[react-navigation@1.5.11](https://github.com/react-navigation/react-navigation)，修改而成
 
 ### 安装组件：
