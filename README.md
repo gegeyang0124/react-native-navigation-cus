@@ -2,6 +2,8 @@
 react-native的导航组件，基于[react-navigation@1.5.11](https://github.com/react-navigation/react-navigation)，修改而成；<BR\>
 更好的导航封装，并且增加进入页面的方法回调（componentWillEnter）和退出页面的方法回调（componentWillExit）
 
+由于react-navigation在TabNavigator和DrawerNavigator下，页面打开过，就不更新了，也没有回调方法刷新页面，也无法准确返回页面，故再次修改封装此组件
+
 ### 安装组件：
 npm i --save react-native-navigation-cus
 
@@ -26,9 +28,8 @@ BaseComponent.getPageParams();//获取页面跳转传递的参数
      * **/ 
  //还有很多react-navigation支持的参数都可通过此方法传递
 this.setParams({
-  headerLeft:null,//导航栏左边按钮可传 bool（false:隐藏左边默认UI;true:显示左边默认UI）、图片(url)、UI
-  headerRight:null
-  ,//导航栏右边按钮可传 bool（false:隐藏左边默认UI;true:显示左边默认UI）、图片(url)、UI
+  headerLeft:true,//导航栏左边按钮可传 bool（false:隐藏左边默认UI;true:显示左边默认UI）、图片(url)、UI
+  headerRight:true,//导航栏右边按钮可传 bool（false:隐藏左边默认UI;true:显示左边默认UI）、图片(url)、UI
   headerLeftHandle:function(){},//函数方法 可在左边按钮点击返回之前执行
   headerRightHandle:function() {}//函数方法 右边按钮点击执行
 });//设置参数改变导航栏
