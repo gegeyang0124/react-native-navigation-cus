@@ -1,11 +1,12 @@
-# react-native-navigation-cus (2018-12-10发布)
-react-native的导航组件，基于[react-navigation@1.5.11](https://github.com/react-navigation/react-navigation)，修改而成
+# react-native-navigation-cus
+react-native的导航组件，基于[react-navigation@1.5.11](https://github.com/react-navigation/react-navigation)，修改而成；<BR\>
+更好的导航封装，并且增加进入页面的方法回调（componentWillEnter）和退出页面的方法回调（componentWillExit）
 
 ### 安装组件：
 npm i --save react-native-navigation-cus
 
 ### 使用 （此导航组件可查看[react-navigation](https://github.com/react-navigation/react-navigation)，或百度搜索react-navigation的使用与配置）
-##### 组件BaseComponent 用于继承导航属性;这个组件中的方法都是"静态和动态"两种调用方式
+##### 组件BaseComponent 方法参数请查看源文件里面有详细的注释，继承导航属性;这个组件中的方法都是"静态和动态"两种调用方式
 ```javascript
 this.goPage();//跳转页面
 BaseComponent.goPage();//跳转页面
@@ -25,8 +26,9 @@ BaseComponent.getPageParams();//获取页面跳转传递的参数
      * **/ 
  //还有很多react-navigation支持的参数都可通过此方法传递
 this.setParams({
-  headerLeft:function() {},//导航栏左边按钮可传 bool（false:隐藏左边默认UI;true:显示左边默认UI）、图片(url)、UI
-  headerRight:function (){},//导航栏右边按钮可传 bool（false:隐藏左边默认UI;true:显示左边默认UI）、图片(url)、UI
+  headerLeft:null,//导航栏左边按钮可传 bool（false:隐藏左边默认UI;true:显示左边默认UI）、图片(url)、UI
+  headerRight:null
+  ,//导航栏右边按钮可传 bool（false:隐藏左边默认UI;true:显示左边默认UI）、图片(url)、UI
   headerLeftHandle:function(){},//函数方法 可在左边按钮点击返回之前执行
   headerRightHandle:function() {}//函数方法 右边按钮点击执行
 });//设置参数改变导航栏

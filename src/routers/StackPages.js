@@ -13,14 +13,34 @@ export default class StackPages {
     static stackPagesStruct = null;
 
     /**
-     * 页面进入的历史堆栈
+     * 页面进入的历史堆栈，只增不减，主要用于历史记录
+     * Tab导航和Drawer导航有效
      * **/
     static stackPagesHistory = [];
 
     /**
-     * 当前页面状态数据
+     * 页面堆栈（对所有导航有效），主要用户返回和进入新页面
+     * 数量和数据会动态变化
+     * //成员： {key:'',routeName:'页面名',params:{传递参数}}
+     * **/
+    static pageStack = [];
+
+    /**
+     * 当前页面状态数据，主要用于导航
+     * Tab导航和Drawer导航有效
      * **/
     static curPageState = {
+        routeName:null,//页面名字
+        params:null,//页面传递参数
+        action:null,//激活动作（事件）
+        isExe:true,//是否页面可以执行
+    }
+
+    /**
+     * 当前页面状态数据 主要用户堆栈历史记录
+     * 所有导航有效
+     * **/
+    static curPageStateStack = {
         routeName:null,//页面名字
         params:null,//页面传递参数
         action:null,//激活动作（事件）
@@ -118,6 +138,29 @@ export default class StackPages {
                     : {}
                 : {});
         }
+    }
+
+    /**
+     * 进入页面执行回调方法
+     * @param navigationState json,//导航状态
+     * **/
+    static componentEnterStack(navigationState){
+        // exeOnece = false;
+        let curState = this.getRoutes(navigationState);
+        // console.info("curState",curState)
+
+        this.curPageStateStack = curState.params
+            ? curState.params.params
+                ? curState.params.params
+                : {}
+            : {};
+        this.curPageStateStack.routeName = curState.routeName;
+
+        /*if(this.pageStack.length == 0){
+
+        }*/
+
+        // console.info("curState",curState);
     }
 
 }

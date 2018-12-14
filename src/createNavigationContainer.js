@@ -4,7 +4,7 @@ import { BackHandler } from './PlatformHelpers';
 import NavigationActions from './NavigationActions';
 import addNavigationHelpers from './addNavigationHelpers';
 import invariant from './utils/invariant';
-import {StackPages} from "react-navigation";
+import StackPages from "./routers/StackPages";
 
 let exeOnece = true;
 
@@ -48,6 +48,12 @@ export default function createNavigationContainer(Component) {
                     ? Component.router.getStateForAction(this._initialAction)
                     : null,
             };
+
+            // console.info("getStateForAction",Component.router.getStateForAction(this._initialAction));
+
+            if(!StackPages.curPageStateStack.routeName){
+                StackPages.componentEnterStack(Component.router.getStateForAction(this._initialAction))
+            }
         }
 
         _isStateful() {
@@ -169,7 +175,7 @@ export default function createNavigationContainer(Component) {
             this.subs && this.subs.remove();
         }
 
-        getRoutes(nav){
+        /*getRoutes(nav){
             if(nav.routes && nav.routes.length > 0){
                 return this.getRoutes(nav.routes[nav.index])
             }
@@ -179,7 +185,7 @@ export default function createNavigationContainer(Component) {
             }
         }
 
-        /*navState = null;
+        navState = null;
         navStatePre = null;
         //执行生命周期 componentWillEnter componentWillExit
         componentEnter(nav){
@@ -198,12 +204,13 @@ export default function createNavigationContainer(Component) {
         // Per-tick temporary storage for state.nav
         dispatch = action => {
             // this.c++;
-            //   console.info("this.c: ",this.c);
+            //   console.info("this.c: ",this.props.navigation);
             if (!this._isStateful()) {
                 // console.info("nav:","nav");
                 return false;
             }
             this._nav = this._nav || this.state.nav;
+            // console.info("this._nav",this._nav);
             const oldNav = this._nav;
             invariant(oldNav, 'should be set in constructor if stateful');
             const nav = Component.router.getStateForAction(action, oldNav);
@@ -231,8 +238,8 @@ export default function createNavigationContainer(Component) {
                 dispatchActionEvents(nav);
             }
 
-            // console.info("this._nav",this._nav);
-            // this.componentEnter(nav);
+            // console.info("nav",nav);
+            StackPages.componentEnterStack(nav);
 
             return false;
         };

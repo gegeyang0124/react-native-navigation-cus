@@ -192,7 +192,7 @@ export default class BaseComponent extends PureComponent {
         }
         else if(isStack){
             // this.pageStack.push(this.navigationer.state);
-            BaseComponent.pageStack.push(StackPages.curPageState);
+            BaseComponent.pageStack.push(StackPages.curPageStateStack);
         }
 
         if(params == undefined){
@@ -232,11 +232,16 @@ export default class BaseComponent extends PureComponent {
         else if(isStack){
             // BaseComponent.backPage = backPage;
             // BaseComponent.pageStack.push(this.props.navigation.state);
-            BaseComponent.pageStack.push(StackPages.curPageState);
+            // BaseComponent.pageStack.push(StackPages.curPageState);
+            BaseComponent.pageStack.push(StackPages.curPageStateStack);
         }
-        // console.info("BaseComponent.pageStack",BaseComponent.pageStack);
-        // console.info("StackPages.stackPagesHistory",StackPages.stackPagesHistory);
-        // console.info("StackPages.curPageState",StackPages.curPageState);
+        /*console.info("BaseComponent.pageStack",BaseComponent.pageStack);
+        console.info("StackPages.stackPagesHistory",StackPages.stackPagesHistory);
+        console.info("StackPages.curPageState",StackPages.curPageState);
+        console.info("StackPages.curPageStateStack",StackPages.curPageStateStack);
+        console.info("this.props.navigation.state",this.props.navigation.state);
+        console.info("BaseComponent.navigationer.state",BaseComponent.navigationer.state);
+*/
 
         /**
          * 修改react-navigation底层
