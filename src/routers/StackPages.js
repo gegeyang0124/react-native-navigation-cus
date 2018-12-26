@@ -26,6 +26,12 @@ export default class StackPages {
     static pageStack = [];
 
     /**
+     * 是否压入pageStack的历史堆栈
+     * 默认压入
+     * **/
+    static isPushStack = true;
+
+    /**
      * 当前页面状态数据，主要用于导航
      * Tab导航和Drawer导航有效
      * **/
@@ -147,18 +153,43 @@ export default class StackPages {
     static componentEnterStack(navigationState){
         // exeOnece = false;
         let curState = this.getRoutes(navigationState);
-        // console.info("curState",curState)
+        // console.info("curState",curState);
 
-        this.curPageStateStack = curState.params
-            ? curState.params.params
+        if(curState.routeName == "DrawerOpen"
+            || curState.routeName == "DrawerToggle"
+            || curState.routeName == "DrawerClose")
+        {
+            this.isPushStack = false;
+        }
+
+        if(this.isPushStack){
+            this.curPageStateStack = curState.params
                 ? curState.params.params
-                : {}
-            : {};
-        this.curPageStateStack.routeName = curState.routeName;
+                    ? curState.params.params
+                    : {}
+                : {};
+            this.curPageStateStack.routeName = curState.routeName;
 
-        /*if(this.pageStack.length == 0){
-
-        }*/
+            let len = this.pageStack.length;
+            if(len > 0){
+                if(this.pageStack[len - 1].routeName == this.curPageStateStack.routeName)
+                {
+                    this.pageStack[len - 1] = this.curPageStateStack;
+                }
+                else
+                {
+                    this.pageStack.push(this.curPageStateStack);
+                }
+            }
+            else
+            {
+                this.pageStack.push(this.curPageStateStack);
+            }
+        }
+        else
+        {
+            this.isPushStack = false;
+        }
 
         // console.info("curState",curState);
     }

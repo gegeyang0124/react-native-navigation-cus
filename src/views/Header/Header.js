@@ -17,6 +17,7 @@ import HeaderBackButton from './HeaderBackButton';
 import ModularHeaderBackButton from './ModularHeaderBackButton';
 import HeaderStyleInterpolator from './HeaderStyleInterpolator';
 import withOrientation from '../withOrientation';
+import BaseComponent from '../../BaseComponent';
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
@@ -81,8 +82,9 @@ class Header extends React.PureComponent {
 
     _navigateBack = (option) => {
         requestAnimationFrame(() => {
+            BaseComponent.goBack();
             //headerLeftDrawer,true执行策划菜单打开或关闭，false或未设置执行默认返回
-            option.headerLeftDrawer&&this.props.navigation.navigate("DrawerToggle")||this.props.navigation.goBack(this.props.scene.route.key);
+            // option.headerLeftDrawer&&this.props.navigation.navigate("DrawerToggle")||this.props.navigation.goBack(this.props.scene.route.key);
         });
     };
 

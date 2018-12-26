@@ -15,7 +15,7 @@ import type {
   TransitionConfigurator,
 } from './TabViewTypeDefinitions';
 
-import {StackPages} from "./../../src/routers/StackPages";
+import StackPages from "./../../src/routers/StackPages";
 
 type GestureEvent = {
   nativeEvent: {

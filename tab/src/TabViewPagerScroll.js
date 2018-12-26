@@ -4,7 +4,7 @@ import * as React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { PagerRendererPropType } from './TabViewPropTypes';
 import type { PagerRendererProps } from './TabViewTypeDefinitions';
-import {StackPages} from "./../../src/routers/StackPages";
+import StackPages from "./../../src/routers/StackPages";
 
 type ScrollEvent = {
     nativeEvent: {

@@ -7,7 +7,7 @@ import {
 import StyleSheetAdapt from "react-native-stylesheet-adapt";
 import {ButtonImage} from "react-native-dropdown-select";
 
-import LeftWhite from './../res/leftWhite.png';
+import LeftWhite from './views/assets/back-icon.png';
 import add from './../res/add.png';
 
 /**
@@ -84,7 +84,8 @@ export default class BaseComponent extends PureComponent {
                                                          // navigation.popToTop(1);//popToTop
                                                      }
                                                  }}
-                                                 style={styles.iconLeft}/>;
+                                                 style={styles.iconLeft}
+                                                 iconStyle={styles.iconLeft}/>;
             }
             else if(typeof (params.headerLeft) == 'number')
             {
@@ -152,6 +153,7 @@ export default class BaseComponent extends PureComponent {
 
     /// 返回当前页面的navigation
     nav() {
+        BaseComponent.navigationer = this.props.navigation;
         return this.props.navigation;
     }
 
@@ -166,7 +168,7 @@ export default class BaseComponent extends PureComponent {
      * **/
     static goPage(pageName,params,isStack = true,backPage){
         // this.backPage = backPage;
-
+        // console.info("pageName",pageName)
         if(backPage){
             if(backPage.constructor == Array){
                 if(backPage.length > 0){
@@ -176,13 +178,17 @@ export default class BaseComponent extends PureComponent {
                                 routeName:v
                             };
                         }
-                        BaseComponent.pageStack.push(v);
+                        // BaseComponent.pageStack.push(v);
+                        StackPages.pageStack.push(v);
                     });
                 }
 
             }
             else if(backPage.constructor == String){
-                BaseComponent.pageStack = BaseComponent.pageStack.concat([{
+                /*BaseComponent.pageStack = BaseComponent.pageStack.concat([{
+                    routeName:backPage
+                }]);*/
+                StackPages.pageStack = StackPages.pageStack.concat([{
                     routeName:backPage
                 }]);
             }
@@ -192,7 +198,8 @@ export default class BaseComponent extends PureComponent {
         }
         else if(isStack){
             // this.pageStack.push(this.navigationer.state);
-            BaseComponent.pageStack.push(StackPages.curPageStateStack);
+            // BaseComponent.pageStack.push(StackPages.curPageStateStack);
+            StackPages.isPushStack = isStack;
         }
 
         if(params == undefined){
@@ -204,7 +211,8 @@ export default class BaseComponent extends PureComponent {
         }
     }
     goPage(pageName,params,isStack = true,backPage){
-
+        BaseComponent.navigationer = this.props.navigation;
+        // console.info("StackPages.pageStack",StackPages.pageStack)
         if(backPage){
 
             if(backPage.constructor == Array){
@@ -215,13 +223,17 @@ export default class BaseComponent extends PureComponent {
                                 routeName:v
                             };
                         }
-                        BaseComponent.pageStack.push(v);
+                        // BaseComponent.pageStack.push(v);
+                        StackPages.pageStack.push(v);
                     });
                 }
 
             }
             else if(backPage.constructor == String){
-                BaseComponent.pageStack = BaseComponent.pageStack.concat([{
+                /*BaseComponent.pageStack = BaseComponent.pageStack.concat([{
+                    routeName:backPage
+                }]); */
+                StackPages.pageStack = StackPages.pageStack.concat([{
                     routeName:backPage
                 }]);
             }
@@ -232,8 +244,8 @@ export default class BaseComponent extends PureComponent {
         else if(isStack){
             // BaseComponent.backPage = backPage;
             // BaseComponent.pageStack.push(this.props.navigation.state);
-            // BaseComponent.pageStack.push(StackPages.curPageState);
-            BaseComponent.pageStack.push(StackPages.curPageStateStack);
+            // BaseComponent.pageStack.push(StackPages.curPageStateStack);
+            StackPages.isPushStack = isStack;
         }
         /*console.info("BaseComponent.pageStack",BaseComponent.pageStack);
         console.info("StackPages.stackPagesHistory",StackPages.stackPagesHistory);
@@ -276,11 +288,13 @@ export default class BaseComponent extends PureComponent {
      * @param isfresh bool;//要返回页面是否刷新，true：刷新，false:不刷新，默认false
      * **/
     static goBack(page,param,isfresh){
+        console.info("pageStack",JSON.stringify(StackPages.pageStack))
         isfresh = isfresh == undefined ? false : isfresh;
         if(page == undefined || page == null)
         {
             // this.navigationer.goBack();
-            let pageObj =  BaseComponent.pageStack.pop();
+            StackPages.pageStack.pop();
+            let pageObj =  StackPages.pageStack[StackPages.pageStack.length - 1];
             // console.info("pageObj",pageObj);
             if(!pageObj || !pageObj.routeName){
                 return;
@@ -319,11 +333,13 @@ export default class BaseComponent extends PureComponent {
         }
     }
     goBack(page,param,isfresh){
+        BaseComponent.navigationer = this.props.navigation;
         isfresh = isfresh == undefined ? false : isfresh;
         if(page == undefined || page == null)
         {
             // this.props.navigation.goBack();
-            let pageObj =  BaseComponent.pageStack.pop();
+            StackPages.pageStack.pop();
+            let pageObj =  StackPages.pageStack[StackPages.pageStack.length - 1];
             // console.info("pageObj",pageObj);
             if(!pageObj || !pageObj.routeName){
                 return;
@@ -371,6 +387,7 @@ export default class BaseComponent extends PureComponent {
         this.navigationer.setParams(params);
     }
     setParams(params){
+        BaseComponent.navigationer = this.props.navigation;
         this.props.navigation.setParams(params);
     }
 
@@ -380,6 +397,7 @@ export default class BaseComponent extends PureComponent {
      * @param param json,//需要设置的参数
      * **/
     setParamsTo(key,param){
+        BaseComponent.navigationer = this.props.navigation;
         const setParamsAction = NavigationActions.setParams({
             params: param, // these are the new params that will be merged into the existing route params
             // The key of the route that should get the new params
@@ -420,6 +438,7 @@ export default class BaseComponent extends PureComponent {
 
     }
     getPageParams(isBack){
+        BaseComponent.navigationer = this.props.navigation;
         isBack = isBack == undefined ? false : isBack;
 
         if(isBack)
@@ -444,13 +463,14 @@ const styles = StyleSheetAdapt.create({
         resizeMode:"contain",
     },
     iconLeft:{
-        width:50,
-        height:50,
+        width:30,
+        height:30,
         marginLeft:10,
+        tintColor:'white',
     },
     iconRight:{
-        width:40,
-        height:40,
+        width:30,
+        height:30,
         marginRight:20,
     },
     headerTitleStyle:{
