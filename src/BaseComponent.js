@@ -85,7 +85,7 @@ export default class BaseComponent extends PureComponent {
                                                      }
                                                  }}
                                                  style={styles.iconLeft}
-                                                 iconStyle={styles.iconLeft}/>;
+                                                 iconStyle={{tintColor:'white'}}/>;
             }
             else if(typeof (params.headerLeft) == 'number')
             {
@@ -293,8 +293,7 @@ export default class BaseComponent extends PureComponent {
         if(page == undefined || page == null)
         {
             // this.navigationer.goBack();
-            StackPages.pageStack.pop();
-            let pageObj =  StackPages.pageStack[StackPages.pageStack.length - 1];
+            let pageObj =  StackPages.pop();
             // console.info("pageObj",pageObj);
             if(!pageObj || !pageObj.routeName){
                 return;
@@ -338,8 +337,7 @@ export default class BaseComponent extends PureComponent {
         if(page == undefined || page == null)
         {
             // this.props.navigation.goBack();
-            StackPages.pageStack.pop();
-            let pageObj =  StackPages.pageStack[StackPages.pageStack.length - 1];
+            let pageObj = StackPages.pop();
             // console.info("pageObj",pageObj);
             if(!pageObj || !pageObj.routeName){
                 return;
@@ -466,7 +464,6 @@ const styles = StyleSheetAdapt.create({
         width:30,
         height:30,
         marginLeft:10,
-        tintColor:'white',
     },
     iconRight:{
         width:30,

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Platform, StyleSheet } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import BaseComponent from "./../../BaseComponent";
 
 import TouchableItem from '../TouchableItem';
 
@@ -42,9 +41,7 @@ const DrawerNavigatorItems = ({
         <TouchableItem
           key={route.key}
           onPress={() => {
-              BaseComponent.goPage(route.routeName,route.param);
-              // console.info("route",route);
-            // onItemPress({ route, focused });
+            onItemPress({ route, focused });
           }}
           delayPressIn={0}
         >

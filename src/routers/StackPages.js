@@ -151,8 +151,10 @@ export default class StackPages {
      * @param navigationState json,//导航状态
      * **/
     static componentEnterStack(navigationState){
+        // console.info("navigationState",navigationState)
         // exeOnece = false;
         let curState = this.getRoutes(navigationState);
+        // console.info("this.curPageStateStack",this.curPageStateStack);
         // console.info("curState",curState);
 
         if(curState.routeName == "DrawerOpen"
@@ -192,6 +194,17 @@ export default class StackPages {
         }
 
         // console.info("curState",curState);
+    }
+
+    /**
+     * 移除页面堆栈
+     * **/
+    static pop(){
+        if(this.pageStack.length > 1){
+            this.pageStack.pop();
+            this.curPageStateStack = this.pageStack[this.pageStack.length - 1];
+        }
+        return this.curPageStateStack;
     }
 
 }

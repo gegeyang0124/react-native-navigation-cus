@@ -18,6 +18,7 @@ import ModularHeaderBackButton from './ModularHeaderBackButton';
 import HeaderStyleInterpolator from './HeaderStyleInterpolator';
 import withOrientation from '../withOrientation';
 import BaseComponent from '../../BaseComponent';
+import StackPages from '../../routers/StackPages';
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
@@ -82,7 +83,18 @@ class Header extends React.PureComponent {
 
     _navigateBack = (option) => {
         requestAnimationFrame(() => {
-            BaseComponent.goBack();
+            let curState = StackPages.getRoutes(this.props.scene.route);
+            if(curState.routeName == "DrawerOpen"
+                || curState.routeName == "DrawerToggle"
+                || curState.routeName == "DrawerClose")
+            {
+                this.props.navigation.navigate("DrawerClose");
+            }
+            else
+            {
+                BaseComponent.goBack();
+            }
+
             //headerLeftDrawer,true执行策划菜单打开或关闭，false或未设置执行默认返回
             // option.headerLeftDrawer&&this.props.navigation.navigate("DrawerToggle")||this.props.navigation.goBack(this.props.scene.route.key);
         });

@@ -5,6 +5,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import withCachedChildNavigation from '../../withCachedChildNavigation';
 import NavigationActions from '../../NavigationActions';
 import invariant from '../../utils/invariant';
+import BaseComponent from "./../../BaseComponent";
 
 /**
  * Component that renders the sidebar screen of the drawer.
@@ -56,6 +57,7 @@ class DrawerSidebar extends React.PureComponent {
     };
 
     _onItemPress = ({ route, focused }) => {
+        // console.info("_onItemPress","_onItemPress")
         this.props.navigation.navigate('DrawerClose');
         if (!focused) {
             let subAction;
@@ -71,7 +73,9 @@ class DrawerSidebar extends React.PureComponent {
                 });
             }
 
-            this.props.navigation.navigate(route.routeName, undefined, subAction);
+            // this.props.navigation.navigate(route.routeName, undefined, subAction);
+            // console.info("route",route)
+            BaseComponent.goPage(route.routeName);
         }
     };
 
