@@ -47,7 +47,7 @@
     "react-lifecycles-compat": "^1.0.2",
     "react-native-drawer-layout-polyfill": "^1.3.2",
     "react-native-safe-area-view": "^0.7.0",
-    "react-native-stylesheet-adapt": "^1.0.1",
+    "react-native-stylesheet-adapt": "^1.0.2",
     "react-native-dropdown-select": "^1.0.3"
   },
   "devDependencies": {
