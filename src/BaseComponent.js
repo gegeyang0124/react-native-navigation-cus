@@ -161,45 +161,18 @@ export default class BaseComponent extends PureComponent {
      * 跳转页面
      * @param pageName string,//页面的名字
      * @param params object,//传递参数
-     * @param isStack bool,//是否压入堆栈，true:是,false：否；默认是：true
-     * @param backPage string/set<string>/set<object>/boolean,
-     object={routeName:'页面名'，params:'参数'}; //返回指定页
-     true;//选项卡点击进入初始页
+     * @param backPage string / json;传入页面名字符串('string')；若含参数则传入json={routeName:'页面名'，params:'参数'}; //返回指定页
      * **/
-    static goPage(pageName,params,isStack = true,backPage){
-        // this.backPage = backPage;
-        // console.info("pageName",pageName)
+    static goPage(pageName,params,backPage){
         if(backPage){
-            if(backPage.constructor == Array){
-                if(backPage.length > 0){
-                    backPage.forEach((v)=>{
-                        if(Object != v.constructor){
-                            v = {
-                                routeName:v
-                            };
-                        }
-                        // BaseComponent.pageStack.push(v);
-                        StackPages.pageStack.push(v);
-                    });
-                }
-
-            }
-            else if(backPage.constructor == String){
-                /*BaseComponent.pageStack = BaseComponent.pageStack.concat([{
+            if(backPage.constructor == String){
+                StackPages.backPage = {
                     routeName:backPage
-                }]);*/
-                StackPages.pageStack = StackPages.pageStack.concat([{
-                    routeName:backPage
-                }]);
+                };
             }
-            else if(backPage){
-                // console.info("StackPages",StackPages.stackPages);
+            else if(backPage.constructor == Object){
+                StackPages.backPage = backPage;
             }
-        }
-        else if(isStack){
-            // this.pageStack.push(this.navigationer.state);
-            // BaseComponent.pageStack.push(StackPages.curPageStateStack);
-            StackPages.isPushStack = isStack;
         }
 
         if(params == undefined){
@@ -210,50 +183,26 @@ export default class BaseComponent extends PureComponent {
             this.navigationer.navigate(pageName,params);
         }
     }
-    goPage(pageName,params,isStack = true,backPage){
+    goPage(pageName,params,backPage){
         BaseComponent.navigationer = this.props.navigation;
-        // console.info("StackPages.pageStack",StackPages.pageStack)
         if(backPage){
 
-            if(backPage.constructor == Array){
-                if(backPage.length > 0){
-                    backPage.forEach((v)=>{
-                        if(Object != v.constructor){
-                            v = {
-                                routeName:v
-                            };
-                        }
-                        // BaseComponent.pageStack.push(v);
-                        StackPages.pageStack.push(v);
-                    });
-                }
-
-            }
-            else if(backPage.constructor == String){
-                /*BaseComponent.pageStack = BaseComponent.pageStack.concat([{
+            if(backPage.constructor == String){
+                StackPages.backPage = {
                     routeName:backPage
-                }]); */
-                StackPages.pageStack = StackPages.pageStack.concat([{
-                    routeName:backPage
-                }]);
+                };
             }
-            else if(backPage){
-
+            else if(backPage.constructor == Object){
+                StackPages.backPage = backPage;
             }
         }
-        else if(isStack){
-            // BaseComponent.backPage = backPage;
-            // BaseComponent.pageStack.push(this.props.navigation.state);
-            // BaseComponent.pageStack.push(StackPages.curPageStateStack);
-            StackPages.isPushStack = isStack;
-        }
-        /*console.info("BaseComponent.pageStack",BaseComponent.pageStack);
+        /*
         console.info("StackPages.stackPagesHistory",StackPages.stackPagesHistory);
         console.info("StackPages.curPageState",StackPages.curPageState);
         console.info("StackPages.curPageStateStack",StackPages.curPageStateStack);
         console.info("this.props.navigation.state",this.props.navigation.state);
         console.info("BaseComponent.navigationer.state",BaseComponent.navigationer.state);
-*/
+        */
 
         /**
          * 修改react-navigation底层
@@ -288,7 +237,7 @@ export default class BaseComponent extends PureComponent {
      * @param isfresh bool;//要返回页面是否刷新，true：刷新，false:不刷新，默认false
      * **/
     static goBack(page,param,isfresh){
-        console.info("pageStack",JSON.stringify(StackPages.pageStack))
+        // console.info("pageStack",JSON.stringify(StackPages.pageStack))
         isfresh = isfresh == undefined ? false : isfresh;
         if(page == undefined || page == null)
         {

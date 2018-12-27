@@ -25,11 +25,11 @@ export default class StackPages {
      * **/
     static pageStack = [];
 
+
     /**
-     * 是否压入pageStack的历史堆栈
-     * 默认压入
+     * 指定返回页面
      * **/
-    static isPushStack = true;
+    static backPage = null;
 
     /**
      * 当前页面状态数据，主要用于导航
@@ -58,9 +58,9 @@ export default class StackPages {
      * **/
     static componentWillExit(){
         if(StackPages.stackPagesHistory.length > 0){
-            let page = StackPages.stackPagesHistory[StackPages.stackPagesHistory.length - 1];
+            let page = this.stackPagesHistory[this.stackPagesHistory.length - 1];
 
-            let clsPre = StackPages.stackPages[page.routeName].screen.prototype;;
+            let clsPre = this.stackPages[page.routeName].screen.prototype;;
             if(clsPre.context){
                 // clsPre.context.componentWillExit&&clsPre.context.componentWillExit.bind(clsPre.context);
                 clsPre.context.componentWillExit&&clsPre.context.componentWillExit(
@@ -77,11 +77,11 @@ export default class StackPages {
      * @param params json,// 页面跳转的传递参数
      * **/
     static componentWillEnter(routeName,params){
-        let cls = StackPages.stackPages[routeName].screen.prototype;
+        let cls = this.stackPages[routeName].screen.prototype;
 
         if(cls.context){
-            StackPages.curPageState = params ? params : {};
-            StackPages.curPageState.routeName = routeName;
+            this.curPageState = params ? params : {};
+            this.curPageState.routeName = routeName;
 
             setTimeout(()=>{
                 // cls.context.componentWillEnter&&cls.context.componentWillEnter.bind(cls.context);
@@ -92,11 +92,11 @@ export default class StackPages {
                  * 第三个参数，页面名
                  * **/
                 cls.context.componentWillEnter&&cls.context.componentWillEnter(
-                    StackPages.curPageState.params,
-                    StackPages.curPageState.action,
-                    StackPages.curPageState.routeName);
+                    this.curPageState.params,
+                    this.curPageState.action,
+                    this.curPageState.routeName);
 
-                StackPages.stackPagesHistory.push(StackPages.curPageState);
+                this.stackPagesHistory.push(this.curPageState);
                 // StackPages.curPageState.isExe = true;
             },0);
         }
@@ -137,6 +137,8 @@ export default class StackPages {
         // console.info("this.curPageState",this.curPageState);
         // console.info("curState",curState);
         if(!this.curPageState.routeName || this.curPageState.routeName != curState.routeName){
+            // console.info("this.curPageState",this.curPageState)
+            // console.info("curState",curState)
             this.componentWillExit();
             this.componentWillEnter(curState.routeName,curState.params
                 ? curState.params.params
@@ -157,14 +159,19 @@ export default class StackPages {
         // console.info("this.curPageStateStack",this.curPageStateStack);
         // console.info("curState",curState);
 
-        if(curState.routeName == "DrawerOpen"
-            || curState.routeName == "DrawerToggle"
-            || curState.routeName == "DrawerClose")
+        if(curState.routeName !== "DrawerOpen"
+            && curState.routeName !== "DrawerToggle"
+            && curState.routeName !== "DrawerClose")
         {
-            this.isPushStack = false;
-        }
+            let cls = this.stackPages[curState.routeName].screen.prototype;
+            if(cls.context&&!cls.context.prePageHistory){
+                cls.context.prePageHistory = this.backPage
+                    ? this.backPage
+                    : this.curPageStateStack;
+            }
 
-        if(this.isPushStack){
+            this.backPage = null;
+
             this.curPageStateStack = curState.params
                 ? curState.params.params
                     ? curState.params.params
@@ -172,16 +179,11 @@ export default class StackPages {
                 : {};
             this.curPageStateStack.routeName = curState.routeName;
 
-            let len = this.pageStack.length;
-            if(len > 0){
-                if(this.pageStack[len - 1].routeName == this.curPageStateStack.routeName)
-                {
-                    this.pageStack[len - 1] = this.curPageStateStack;
-                }
-                else
-                {
-                    this.pageStack.push(this.curPageStateStack);
-                }
+            /*let len = this.pageStack.length;
+        if(len > 0){
+            if(this.pageStack[len - 1].routeName == this.curPageStateStack.routeName)
+            {
+                this.pageStack[len - 1] = this.curPageStateStack;
             }
             else
             {
@@ -190,7 +192,8 @@ export default class StackPages {
         }
         else
         {
-            this.isPushStack = false;
+            this.pageStack.push(this.curPageStateStack);
+        }*/
         }
 
         // console.info("curState",curState);
@@ -200,10 +203,16 @@ export default class StackPages {
      * 移除页面堆栈
      * **/
     static pop(){
-        if(this.pageStack.length > 1){
+        let cls = this.stackPages[this.curPageStateStack.routeName].screen.prototype;
+        if(cls.context&&cls.context.prePageHistory){
+            this.curPageStateStack = cls.context.prePageHistory;
+            cls.context.prePageHistory = null;
+        }
+
+        /*if(this.pageStack.length > 1){
             this.pageStack.pop();
             this.curPageStateStack = this.pageStack[this.pageStack.length - 1];
-        }
+        }*/
         return this.curPageStateStack;
     }
 
