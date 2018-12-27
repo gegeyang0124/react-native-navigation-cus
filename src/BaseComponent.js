@@ -269,10 +269,10 @@ export default class BaseComponent extends PureComponent {
 
             if(this.backRefresh || isfresh){
                 this.backRefresh = false;
-                this.goPage(routeName,this.backData,false);
+                this.goPage(routeName,this.backData);
             }
             else {
-                this.goPage(routeName,undefined,false);
+                this.goPage(routeName);
             }
         }
         else
@@ -313,10 +313,10 @@ export default class BaseComponent extends PureComponent {
 
             if(BaseComponent.backRefresh || isfresh){
                 BaseComponent.backRefresh = false;
-                this.goPage(routeName,BaseComponent.backData,false);
+                this.goPage(routeName,BaseComponent.backData);
             }
             else {
-                this.goPage(routeName,undefined,false);
+                this.goPage(routeName);
             }
 
         }
