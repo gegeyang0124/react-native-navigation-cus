@@ -6,7 +6,7 @@ react-native的导航组件，基于[react-navigation@1.5.11](https://github.com
 每一个Tab页面组都有自己的返回逻辑，互不影响；<BR/>
 杜绝了传统的记住历史页面进行的返回，返回到别的Tab页面组；<BR/>
 </b>
-<img src="./showImg/nav.gif" width="400" height="auto">
+<img src="./showImg/nav.gif" width="300" height="auto">
 
 由于react-navigation在TabNavigator和DrawerNavigator下，页面打开过，就不更新了，也没有回调方法刷新页面，也无法准确返回页面，故再次修改封装此组件
 
