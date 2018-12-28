@@ -2,9 +2,10 @@
 react-native的导航组件，基于[react-navigation@1.5.11](https://github.com/react-navigation/react-navigation)，修改而成；<BR\>
 更好的页面导航封装，并且增加进入页面的方法回调（componentWillEnter）和退出页面的方法回调（componentWillExit） <Br/>
 <b>
-完美的页面导航跳转返回；<BR/>
-每一个Tab页面组都有自己的返回逻辑，互不影响；<BR/>
-杜绝了传统的记住历史页面进行的返回，返回到别的Tab页面组；<BR/>
+完美的页面导航跳转返回；
+每一个Tab页面组都有自己的返回逻辑，互不影响；
+杜绝了传统的记住历史页面进行的返回;
+避免从一个Tab页面组跳入到另一个Tab页面组，返回时返回到跳入之前的Tab页面组；<BR/>
 </b>
 <img src="./showImg/nav.gif" width="300" height="auto">
 
