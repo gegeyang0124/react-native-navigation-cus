@@ -84,12 +84,14 @@ export default class BaseComponent extends PureComponent {
                                                          // navigation.popToTop(1);//popToTop
                                                      }
                                                  }}
+                                                 frameStyle={styles.iconLeftFrame}
                                                  style={styles.iconLeft}
                                                  iconStyle={{tintColor:'white'}}/>;
             }
             else if(typeof (params.headerLeft) == 'number')
             {
                 header.headerLeft = <ButtonImage icon={params.headerLeft}
+                                                 frameStyle={styles.iconLeftFrame}
                                                  onPressIn={params.headerLeftHandle}
                                                  style={styles.iconLeft}/>;
 
@@ -116,13 +118,14 @@ export default class BaseComponent extends PureComponent {
                                                           params.headerRightHandle && params.headerRightHandle();
                                                       }
                                                   }}
+                                                  frameStyle={styles.iconLeftFrame}
                                                   style={[styles.iconRight]}/>;
             }
             else if(typeof (params.headerRight) == 'number')
             {
                 header.headerRight = <ButtonImage icon={params.headerRight}
                                                   onPressIn={params.headerRightHandle}
-                    // iconStyle={styles.iconStyle}
+                                                  frameStyle={styles.iconLeftFrame}
                                                   style={styles.iconRight}/>;
 
             }
@@ -409,15 +412,22 @@ const styles = StyleSheetAdapt.create({
         height:40,
         resizeMode:"contain",
     },
+    iconLeftFrame:{
+        width:60,
+        height:60,
+        alignItems:'center',
+        justifyContent:'center',
+        // backgroundColor:'green',
+    },
     iconLeft:{
         width:30,
         height:30,
-        marginLeft:10,
+        // marginLeft:10,
     },
     iconRight:{
         width:30,
         height:30,
-        marginRight:20,
+        // marginRight:20,
     },
     headerTitleStyle:{
         flex: 1,

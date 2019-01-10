@@ -1,6 +1,6 @@
 {
   "name": "react-native-navigation-cus",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "react-native的导航组件，基于react-navigation@1.5.11，修改而成.",
   "main": "src/react-navigation.js",
   "scripts": {
